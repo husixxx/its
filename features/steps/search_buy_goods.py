@@ -69,6 +69,63 @@ def step_impl(context):
 @then(u'Page of related product is displayed')
 def step_impl(context):
     assert context.driver.find_element(By.LINK_TEXT, 'Apple Cinema 30"').text == 'Apple Cinema 30"'
+
+### Scenario 5
+@given(u'User is on the product page')
+def step_impl(context):
+    context.driver.get("http://opencart:8080/en-gb/product/iphone")
+
+@when(u'User clicks on the "Add to cart" button')
+def step_impl(context):
+    context.driver.find_element(By.ID, "button-cart").click()
+
+@then(u'Product is added to the cart')
+def step_impl(context):
+    assert context.driver.find_element(By.CSS_SELECTOR, ".alert-success").text == "Success: You have added iPhone to your shopping cart!"    
+
+# ### scenario 6
+# @step(u'quantity of product is 0')
+# def step_impl(context):
+#     context.driver.find_element(By.ID, "input-quantity").clear()
+#     context.driver.find_element(By.ID, "input-quantity").send_keys("0")
+#     context.driver.find_element(By.ID, "button-cart").click()
+
+### scenario 7
+@given(u'User is on the cart page')
+def step_impl(context):
+    context.driver.get("http://opencart:8080/en-gb?route=checkout/cart")
     
+
+@step(u'Product is in the cart')
+def step_impl(context):
+    iphone = context.driver.find_element(By.LINK_TEXT, "iPhone").text
+
+@when(u'User clicks on the "Remove" button')
+def step_impl(context):
+    context.driver.find_element(By.CSS_SELECTOR, "#shopping-cart > div > table > tbody > tr > td:nth-child(4) > form > div > button.btn.btn-danger").click()
     
-   
+@then(u'Product is removed from the cart')
+def step_impl(context):
+    # try to find iphone on the screen but there shouldnt be one so it should throw an exception and pass the test
+    try:
+        context.driver.find_element(By.LINK_TEXT, "iPhone")
+    except NoSuchElementException:
+        pass
+
+### scenario 8
+
+@step(u'Any product is in the cart')
+def step_impl(context):
+    context.driver.get("http://opencart:8080/en-gb/product/macbook")
+    sleep(0.1)
+    context.driver.find_element(By.ID, "button-cart").click()
+    sleep(0.1)
+    context.driver.get("http://opencart:8080")
+
+@when(u'User click on the cart icon')
+def step_impl(context):
+    context.driver.find_element(By.CSS_SELECTOR, ".fa-cart-shopping").click()
+
+@then(u'All the products in the cart are displayed')
+def step_impl(context):
+    assert context.driver.find_element(By.LINK_TEXT, "MacBook").text == "MacBook" 

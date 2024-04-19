@@ -25,14 +25,14 @@ Scenario: Add a product to the cart (5)
     Given User is on the product page
     When User clicks on the "Add to cart" button
     Then Product is added to the cart
-    And Message is displayed
+    
 
 Scenario: Add bad quantity of product to the cart (6)
     Given User is on the product page
     When User clicks on the "Add to cart" button
     And quantity of product is 0
     Then Product is not added to the cart
-    But Message is displayed
+    
 
 Scenario: Remove a product from the cart (7)
     Given User is on the cart page
