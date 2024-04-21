@@ -18,15 +18,7 @@ def get_driver():
                 options=webdriver.FirefoxOptions())
     driver.implicitly_wait(15)
 
-    # Web stranku ziskate nasledujicim:
-    # (jedno nebo druhe, zalezi na nastaveni prostedi)
-    # driver.get("http://opencart:8080/")
-    # driver.get("http://localhost:8080/")
-
     return driver
-
-    # Nezapomente vzdy po ukonceni testovani zavrit driver:
-    # driver.close() nebo .quit()
 
 def before_all(context):
     context.driver = get_driver()
